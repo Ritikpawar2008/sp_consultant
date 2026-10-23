@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AppShell } from "@/components/app-shell";
 import { getSiteConfig } from "@/lib/site-server";
+import { GoogleAnalytics } from "@/components/google-analytics";
 
 export async function generateMetadata(): Promise<Metadata> {
   const config = await getSiteConfig();
@@ -13,5 +14,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const config = await getSiteConfig();
-  return <html lang="en"><body><AppShell config={config}>{children}</AppShell></body></html>;
+  return (
+    <html lang="en">
+      <body>
+        <GoogleAnalytics />
+        <AppShell config={config}>{children}</AppShell>
+      </body>
+    </html>
+  );
 }
