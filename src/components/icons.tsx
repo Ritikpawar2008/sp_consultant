@@ -1,6 +1,8 @@
-type IconName = "building" | "handover" | "community" | "document" | "stamp" | "folder" | "search" | "landmark" | "arrow" | "check" | "sparkle" | "phone" | "mail" | "menu" | "close" | "chat" | "calendar" | "location" | "spinner" | "x" | "log-out" | "refresh-cw" | "inbox" | "trash" | "alert-circle" | "message-square" | "star" | "chevron-left" | "upload" | "check-circle";
+type IconName = "building" | "handover" | "community" | "document" | "stamp" | "folder" | "search" | "landmark" | "arrow" | "check" | "sparkle" | "phone" | "mail" | "menu" | "close" | "chat" | "calendar" | "location" | "spinner" | "x" | "log-out" | "refresh-cw" | "inbox" | "trash" | "alert-circle" | "message-square" | "star" | "chevron-left" | "upload" | "check-circle" | "instagram" | "linkedin";
 
 const paths: Record<IconName, React.ReactNode> = {
+  instagram: <><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></>,
+  linkedin: <><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></>,
   "chevron-left": <polyline points="15 18 9 12 15 6" />,
   "upload": <><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></>,
   "check-circle": <><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></>,

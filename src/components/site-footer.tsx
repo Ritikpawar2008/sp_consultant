@@ -1,16 +1,46 @@
 import Link from "next/link";
 import { BrandMark } from "@/components/brand-mark";
 import { Icon } from "@/components/icons";
-import { siteConfig as defaultSiteConfig } from "@/lib/site";
+import { siteConfig as defaultSiteConfig, type SiteConfig } from "@/lib/site";
 
-export function SiteFooter({ config }: { config?: any }) {
+export function SiteFooter({ config }: { config?: SiteConfig | any }) {
   const siteConfig = config || defaultSiteConfig;
   const mapQuery = encodeURIComponent(siteConfig.officeAddress);
 
   return <footer className="bg-[#061d43] text-white">
     {/* Top Links Section */}
     <div className="mx-auto grid max-w-7xl gap-12 px-5 py-14 sm:px-8 lg:grid-cols-[1.4fr_0.8fr_1fr]">
-      <div><BrandMark /><p className="mt-5 max-w-sm text-sm leading-6 text-[#b5c5de]">Professional support for society conveyance, documentation, registration, stamp-duty matters, and related compliance processes.</p><p className="mt-5 text-xs font-bold uppercase tracking-[0.16em] text-[#78b3ff]">{siteConfig.tagline}</p></div>
+      <div>
+        <BrandMark />
+        <p className="mt-5 max-w-sm text-sm leading-6 text-[#b5c5de]">Professional support for society conveyance, documentation, registration, stamp-duty matters, and related compliance processes.</p>
+        <p className="mt-5 text-xs font-bold uppercase tracking-[0.16em] text-[#78b3ff]">{siteConfig.tagline}</p>
+        {(siteConfig.instagramUrl || siteConfig.linkedinUrl) && (
+          <div className="mt-6 flex items-center gap-3">
+            {siteConfig.instagramUrl && (
+              <a
+                href={siteConfig.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="grid h-10 w-10 place-items-center rounded-xl bg-[#133267] text-[#78b3ff] border border-white/10 transition hover:bg-[#126ce5] hover:text-white hover:border-[#126ce5]"
+              >
+                <Icon name="instagram" className="h-5 w-5" />
+              </a>
+            )}
+            {siteConfig.linkedinUrl && (
+              <a
+                href={siteConfig.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="grid h-10 w-10 place-items-center rounded-xl bg-[#133267] text-[#78b3ff] border border-white/10 transition hover:bg-[#126ce5] hover:text-white hover:border-[#126ce5]"
+              >
+                <Icon name="linkedin" className="h-5 w-5" />
+              </a>
+            )}
+          </div>
+        )}
+      </div>
       <div><h2 className="text-sm font-bold uppercase tracking-[0.16em] text-[#78b3ff]">Explore</h2><div className="mt-5 grid gap-3 text-sm text-[#dce7f7]"><Link href="/services">Services</Link><Link href="/expertise">Expertise</Link><Link href="/about">About us</Link><Link href="/reviews">Reviews</Link><Link href="/contact">Contact us</Link></div></div>
       <div>
         <h2 className="text-sm font-bold uppercase tracking-[0.16em] text-[#78b3ff]">Speak with us</h2>

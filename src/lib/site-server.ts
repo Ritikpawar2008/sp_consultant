@@ -24,6 +24,10 @@ export async function getSiteConfig() {
         config.tagline = row.value;
       } else if (row.key === 'business_name' && row.value) {
         config.name = row.value;
+      } else if (row.key === 'instagram_url' && row.value) {
+        config.instagramUrl = row.value;
+      } else if (row.key === 'linkedin_url' && row.value) {
+        config.linkedinUrl = row.value;
       }
     });
   } catch (error) {

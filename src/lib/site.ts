@@ -7,7 +7,11 @@ export const defaultSiteConfig = {
   serviceArea: "Palghar, Vasai, Virar, Mira Bhayandar, Thane, Navi Mumbai & surrounding areas",
   officeAddress: "A/103, Shree Sangam CHSL, M.B. Estate, Near Kalavati Aai Mandir, Baba Ground, Virar West, Tal. Vasai, Dist. Palghar - 401303, Maharashtra, India.",
   mapUrl: "https://maps.app.goo.gl/er2iKkXCu9dxVWXA7?g_st=iw",
+  instagramUrl: "",
+  linkedinUrl: "",
 };
+
+export type SiteConfig = typeof defaultSiteConfig;
 
 export const siteConfig = defaultSiteConfig;
 
