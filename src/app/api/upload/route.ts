@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
-import { writeFile, mkdir } from "fs/promises";
-import { join } from "path";
-import { existsSync } from "fs";
+import { put } from "@vercel/blob";
 
 export async function POST(request: Request) {
   try {
@@ -20,35 +18,45 @@ export async function POST(request: Request) {
 
     const validTypes = ["image/jpeg", "image/png", "image/webp"];
     if (!validTypes.includes(file.type)) {
-      return NextResponse.json({ error: "Invalid file type. Only JPG, PNG, and WebP are allowed." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid file type. Only JPG, PNG, and WebP are allowed." },
+        { status: 400 }
+      );
     }
 
     const maxSize = 5 * 1024 * 1024; // 5MB
     if (file.size > maxSize) {
-      return NextResponse.json({ error: "File is too large. Maximum size is 5MB." }, { status: 400 });
+      return NextResponse.json(
+        { error: "File is too large. Maximum size is 5MB." },
+        { status: 400 }
+      );
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    // Clean filename and generate a unique path under the gallery folder
+    const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
+    const uniquePath = `gallery/${Date.now()}-${sanitizedFileName}`;
 
-    // Make sure public/uploads exists
-    const uploadDir = join(process.cwd(), "public", "uploads");
-    if (!existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true });
-    }
+    // Upload directly to Vercel Blob (server-side only)
+    const blob = await put(uniquePath, file, {
+      access: "public",
+      contentType: file.type,
+    });
 
-    // Generate unique filename
-    const uniqueName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`;
-    const filePath = join(uploadDir, uniqueName);
-    await writeFile(filePath, buffer);
-
-    const imageUrl = `/uploads/${uniqueName}`;
-
-    return NextResponse.json({ success: true, url: imageUrl });
+    return NextResponse.json({ success: true, url: blob.url });
   } catch (error: any) {
     console.error("Upload error:", error);
+
+    // Provide helpful user-facing errors without leaking token secrets
+    const isTokenMissing =
+      error?.message?.includes("BLOB_READ_WRITE_TOKEN") ||
+      error?.name === "BlobAccessError";
+
+    const errorMessage = isTokenMissing
+      ? "Image storage is not configured yet. Please configure the Vercel Blob store token."
+      : error?.message || "Failed to upload file";
+
     return NextResponse.json(
-      { success: false, error: error.message || "Failed to upload file" },
+      { success: false, error: errorMessage },
       { status: 500 }
     );
   }

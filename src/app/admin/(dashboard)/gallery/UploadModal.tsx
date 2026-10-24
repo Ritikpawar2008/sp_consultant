@@ -163,7 +163,6 @@ export function UploadModal({ onClose, onSuccess }: UploadModalProps) {
             <h4 className="text-base font-bold text-[#09295a] mb-2">Drag and drop images here</h4>
             <p className="text-sm text-gray-500 mb-6 text-center max-w-md">
               Support for JPG, JPEG, PNG, and WebP up to 5MB per file.
-              <br/>For production, ensure a remote storage solution (like Vercel Blob or AWS S3) is configured. Currently saving locally.
             </p>
             <button
               onClick={() => fileInputRef.current?.click()}
